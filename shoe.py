@@ -2,6 +2,7 @@
 
 import itertools
 
+import brand
 class Shoe:
     id_iter = itertools.count() #this will be used to give a unique id for each shoe in the database
 
