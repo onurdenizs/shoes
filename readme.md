@@ -1,14 +1,6 @@
-# H1
-## H2
-### H3
-#### H4
-##### H5
-###### H6
+# Running Shoe Adviser 
+ <div style="text-align: right"> by Onur Deniz </div>
 
-Alternatively, for H1 and H2, an underline-ish style:
+<div style="text-align: left"> I am trying coding for the first time and here is my first work.  </div>
 
-Alt-H1
-======
-
-Alt-H2
-------
+    **Running shoe adviser** is a very simple program. Based on some criterias (Gender, Brand, Terrain type, Pace, Arch Support, Weight and Price) it finds running shoes. The shoe database is very limited. I am doing this as the off-platform project of Codecademy.
