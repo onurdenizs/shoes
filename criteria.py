@@ -1,12 +1,25 @@
-"""This class will hold the necessary functions and class properties for criterias"""
+
 import math
 
 import itertools
 import brand
 class Criteria:
+    """This criteria class elements
+    Attributes:
+        id_iter:     this will be used to give a unique id for each shoe in the database
+        criteria_db:     every instance of brand class will be added to this list after creation
+    """
     id_iter = itertools.count() #this will be used to give a unique id for each brand in the database
     criteria_db = []
     def __init__(self, text, choices=[], current_value=None, is_numeric=False) -> None:
+        """
+        param:
+        text: visible text of the criteria on the secreen (str)
+        choices: possible choices for the criteria (list)
+        current_value: current selection from the choices or None
+        is_numeric: True if the criteria is numeric, else False
+        
+        """
         self.id = next(Criteria.id_iter) # here we increment the id by 1
         self.text = text #this should be in string
         self.is_numeric = is_numeric # this should be True or False
@@ -16,7 +29,8 @@ class Criteria:
         #print(self.choices)
 
     def initialize_program_criterias():
-        """this function creates all the neccessary criterias for the program"""
+        """Creates all the neccessary criterias for the program"""
+        
         """You need to create brand list with initialize_program_brands() function before using this function"""
         
         criteria_list = []
