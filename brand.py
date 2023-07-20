@@ -15,14 +15,21 @@ class Brand:
     brand_db = []
     
     def __init__(self, brand_name) -> None:
+        """
+        param:
+        brand_name: name of the brand in str
+        """
         self.id = next(Brand.id_iter) # here we increment the id by 1
-        self.brand_name = brand_name #this hould be in string
+        self.brand_name = brand_name 
         Brand.brand_db.append(self)
         self.model_list = []
     
     def get_brand_by_brand_name(brand_name):
         """gets a name as string and returns the brand with that name
-        if no brand exists with that name it returns None"""
+        if no brand exists with that name it returns None
+        param:
+        brand_name: name of the brand in str
+        """
         brand = None
         for item in Brand.brand_db:
             if item.brand_name.lower() == brand_name.lower():
@@ -30,7 +37,11 @@ class Brand:
                 break
         return brand
     def branddb_to_string(brand_db):
-        """this function turns brand db list items names into strings"""
+        """this function turns brand db list items names into strings
+        
+        param:
+        brand_db: class attribute of the brand class 
+        """
         brandlist_string = []
         for brand in brand_db:
             brandlist_string.append(brand.brand_name)
