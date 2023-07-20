@@ -41,6 +41,6 @@ class Criteria:
         criteria_list.append(Criteria("Arch Support",["Neutral", "Stability"], None))
         criteria_list.append(Criteria("Max Weight", [], None, True))
         criteria_list.append(Criteria("Max Price", [], None, True))
-        return criteria_list        
+                
 
 

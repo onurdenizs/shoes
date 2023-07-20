@@ -44,12 +44,12 @@ def print_header_lower(menu_name):
     print("{0}|{1}|{2}".format(white_spaces,menu_name,white_spaces))
     print(line)
 
-def print_criteria_menu_ingredient_line(possible_choices, criteria):
-    """Takes a message as a string input
+def print_criteria_menu_ingredient_line(criteria):
+    """Takes a criteria as an input
     formats and prints it to screen as a menu item
     
     param: 
-    possible_choices: possible choices before this function is called (list)
+    current_menu_choices: possible choices before this function is called (list)
     criteria: criteria as criteria class
     """
     menu_line =[]
@@ -76,7 +76,7 @@ def print_criteria_menu_ingredient_line(possible_choices, criteria):
         
     menu_line[-1]=":"
 
-    possible_choices.append(str(criteria.id))
+    
     print("".join(menu_line))
     
     
@@ -86,8 +86,9 @@ def print_criteria_menu_ingredient_line(possible_choices, criteria):
 def print_welcome_screen():
     """prints the initial screen to terminal"""
     print_header("Running Shoe Advisor V1")
-    possible_choices=print_main_menu()
-    return possible_choices
+    
+    
+    
     
 
 def print_main_menu():
@@ -96,24 +97,39 @@ def print_main_menu():
     """
     print_header("Main Menu")
     print_header("[M] = Modify Criterias [F] = Find Shoes with current criterias [Q] = Quit Program")
-    possible_choices=["m","f","q"]
-    return possible_choices
+    
+    
+    
 
-def print_modify_criterias_screen(possible_choices):
+def print_criteria_screen():
+    """
+    Prints CRTIERIA MODIFICATION menu to the secreen and ask user for an input
+    returns the user input
+    
+    param:
+    current_menu_choices: list of possible menu choices until this function is called
+    """
     print_header("MODIFY CRITERIAS")
-    print_current_criteria_selections(possible_choices,criteria.Criteria.criteria_db)
+    print_current_criteria_selections()
+    
+    
+     
 
-def print_current_criteria_selections(possible_choices,criteria_db):
+def print_current_criteria_selections():
     """
     prints current possible choices List to the screen
+    and modifies current_menu_choices list by adding current criterias' shortcuts
+    
+    param: 
+    current_menu_choices: list of possible menu choices until this function is called
     """
-
+    criteria_menu_choices = []
     print_header_lower("Here are the current Criteria Selections")
-    for crit in criteria_db:
+    for crit in criteria.Criteria.criteria_db:
         
-        print_criteria_menu_ingredient_line(possible_choices, crit)
-        possible_choices.append(str(crit.id))
-    possible_choices.append(print_main_menu())    
+        print_criteria_menu_ingredient_line(crit)
+       
+        
     
 
     
@@ -124,39 +140,106 @@ def print_current_criteria_selections(possible_choices,criteria_db):
 
 
 #MAIN PROGRAM FUNCTIONS STARTS HERE
+def main_menu_screen(current_menu_choices):
+    """
+    All the operations related to main/opening screen is in this function
+    """
+    print_main_menu()
+    update_possible_choices(current_menu_choices, main_menu_shortcuts())
+     
+def criteria_menu_screen():
+    """
+    All the operations related to criteria menu screen is here
+    """
+    current_menu_choices = []
+    print_criteria_screen()
+    print_main_menu()
+    update_possible_choices(current_menu_choices, main_menu_shortcuts())
+    update_possible_choices(current_menu_choices,criteria_screen_shortcuts())
+    user_choice = get_user_choice("Please Enter The Shortcut of the item you are interested: ")
+    while check_user_choice_validity(user_choice,current_menu_choices) == False:
+        os.system('cls')
+        user_choice = criteria_menu_screen()    
+    return user_choice     
+def criteria_screen_shortcuts():
+    """"returns a list wich contains list of id's of criterias"""
+    criteria_choices= []
+    for crit in criteria.Criteria.criteria_db:
+        criteria_choices.append(str(crit.id))
+    return criteria_choices
+def main_menu_shortcuts():
+    """
+    Returns the list of main menu shortcuts
+    """
+    main_menu_choices=["m","f","q"]
+    return main_menu_choices
+def update_possible_choices(current_menu_choices, items_to_add):
+    """
+    updates the current possible menu selection list with new items 
+    if the new items are not in the list already
+    param:
+    current_menu_choices_list: menu selection shortcuts before this function was called (list)
+    items_to_add: list of the shortcuts that will be added to menu selection list
+    """
+    for item in items_to_add:
+        if len(current_menu_choices) == 0:
+            current_menu_choices.append(item)
+        else:
+            if item not in current_menu_choices:
+                current_menu_choices.append(item)
 def get_user_choice(message):
-    """Asks user's input choice and returns it
+    """Asks user's input choice and keeps asking until a valid input is entered
+    returns it
     param:
     message: message which will be shown to user while asking for input
+    current_menu_choices: vurrent possible menu slection shortcuts
+    print_funct(): function that calls this get_user_function
     """
-    user_coice = input(message)
-    return user_coice
-
+    user_choice = input(message)
+    
+    return user_choice
+def check_user_choice_validity(user_choice,current_menu_choices):
+    if user_choice.lower() in current_menu_choices:
+        return True
+    else:
+        return False
 def initialize_program():
     """"
     initializes program by creating necessariy databases and prints welcome screen
     """
     shoe.Shoe.initialize_program_shoes("shoe_db.csv")
-    criteria_list=criteria.Criteria.initialize_program_criterias()
+    criteria.Criteria.initialize_program_criterias()
     
-    possible_choices = print_welcome_screen()
-    return possible_choices
+    
+    
 def run_program():
     """
     all the program functionality runs through this function
     """
     os.system('cls')
-    
-    possible_choices = initialize_program()
+    current_menu_choices = []
+    initialize_program()
+    print_welcome_screen()
+    main_menu_screen(current_menu_choices)
     user_choice = get_user_choice("Please Select an option from the Main Menu items: ")
-    if user_choice.lower() == "q":
-        print("BYE, hope to see you again!")
-        return
+    while user_choice.lower() not in current_menu_choices:
+        os.system('cls')
+        current_menu_choices = []
+        print_welcome_screen()
+        main_menu_screen(current_menu_choices)
+        print("You have made an INVALID selection")
+        user_choice = get_user_choice("Please Select an option from the Main Menu items: ")
+
+
     if user_choice.lower() == "m":
         os.system('cls')
-        print_modify_criterias_screen(possible_choices)
+        criteria_menu_screen()
     if user_choice.lower() == "f":
-        pass
+        pass                                 
+    if user_choice.lower() == "q":
+        print("BYE, hope to see you again!")
+        return    
+    
     
 
     
