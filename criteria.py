@@ -13,14 +13,15 @@ class Criteria:
         self.choices = choices #this is a List of choices
         self.current_value = current_value #numeric
         Criteria.criteria_db.append(self)
+        #print(self.choices)
 
     def initialize_program_criterias():
         """this function creates all the neccessary criterias for the program"""
         """You need to create brand list with initialize_program_brands() function before using this function"""
-        print("Initializing Program Criterias")
+        
         criteria_list = []
         criteria_list.append(Criteria("Gender",["Male", "Female"], None))
-        criteria_list.append(Criteria("Brand",brand.Brand.brand_db,None))
+        criteria_list.append(Criteria("Brand",brand.Brand.branddb_to_string(brand.Brand.brand_db),None))
         criteria_list.append(Criteria("Terrain",["Road", "Trail"], None))
         criteria_list.append(Criteria("Pace",["Daily", "Tempo", "Competition"], None))
         criteria_list.append(Criteria("Arch Support",["Neutral", "Stability"], None))
