@@ -8,41 +8,50 @@ import shoe
 
 
 
-def print_header(message):
-    """This function takes a message as an input
-    this message is the title of the current menu and
-    formats it for screen and prints it"""
+def print_header(menu_name):
+    """gets the name of the Menu
+
+    param:
+    menu_name: title of the current menu
+    """
     message_width = 82
     
     white_spaces=" "
     line = "="
-    for i in range(int((message_width+2-len(message))/2)):
+    for i in range(int((message_width+2-len(menu_name))/2)):
         white_spaces += " "
     for i in range(message_width+2):
         line += "="
     print(line)
-    print("{0}|{1}|{2}".format(white_spaces,message,white_spaces))
+    print("{0}|{1}|{2}".format(white_spaces,menu_name,white_spaces))
     print(line)
 
-def print_header_lower(message):
-    """This function takes a message as an input
-    this message is the title of the Sub Menu and
-    formats it for screen and prints it"""
+def print_header_lower(menu_name):
+    """gets the name of the Menu and prints the Sub Menu lower Header on the screen
+
+    param:
+    menu_name: title of the current menu
+    """
     message_width = 82
     
     white_spaces=" "
     line = "."
-    for i in range(int((message_width+2-len(message))/2)):
+    for i in range(int((message_width+2-len(menu_name))/2)):
         white_spaces += " "
     for i in range(message_width+2):
         line += "."
     print(line)
-    print("{0}|{1}|{2}".format(white_spaces,message,white_spaces))
+    print("{0}|{1}|{2}".format(white_spaces,menu_name,white_spaces))
     print(line)
 
 def print_criteria_menu_ingredient_line(possible_choices, criteria):
-    """this functiontakes a message as a string input
-    formats and prints it to screen as a menu item"""
+    """Takes a message as a string input
+    formats and prints it to screen as a menu item
+    
+    param: 
+    possible_choices: possible choices before this function is called (list)
+    criteria: criteria as criteria class
+    """
     menu_line =[]
     menu_item = "[{0}] {1}".format(str(criteria.id),criteria.text.upper())
     menu_item_list = list(menu_item)
@@ -75,13 +84,16 @@ def print_criteria_menu_ingredient_line(possible_choices, criteria):
     
     
 def print_welcome_screen():
-    """This function  prints the initial screen to terminal"""
+    """prints the initial screen to terminal"""
     print_header("Running Shoe Advisor V1")
     possible_choices=print_main_menu()
     return possible_choices
     
 
 def print_main_menu():
+    """
+    prints main menu to the screen
+    """
     print_header("Main Menu")
     print_header("[M] = Modify Criterias [F] = Find Shoes with current criterias [Q] = Quit Program")
     possible_choices=["m","f","q"]
@@ -92,6 +104,9 @@ def print_modify_criterias_screen(possible_choices):
     print_current_criteria_selections(possible_choices,criteria.Criteria.criteria_db)
 
 def print_current_criteria_selections(possible_choices,criteria_db):
+    """
+    prints current possible choices List to the screen
+    """
 
     print_header_lower("Here are the current Criteria Selections")
     for crit in criteria_db:
@@ -110,17 +125,26 @@ def print_current_criteria_selections(possible_choices,criteria_db):
 
 #MAIN PROGRAM FUNCTIONS STARTS HERE
 def get_user_choice(message):
-    """This function ask user to enter an input to enter in order to navigate"""
+    """Asks user's input choice and returns it
+    param:
+    message: message which will be shown to user while asking for input
+    """
     user_coice = input(message)
     return user_coice
 
 def initialize_program():
+    """"
+    initializes program by creating necessariy databases and prints welcome screen
+    """
     shoe.Shoe.initialize_program_shoes("shoe_db.csv")
     criteria_list=criteria.Criteria.initialize_program_criterias()
     
     possible_choices = print_welcome_screen()
     return possible_choices
 def run_program():
+    """
+    all the program functionality runs through this function
+    """
     os.system('cls')
     
     possible_choices = initialize_program()
