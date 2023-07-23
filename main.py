@@ -83,9 +83,39 @@ def print_criteria_menu_ingredient_line(criteria):
 
     
     
-def print_welcome_screen():
-    """prints the initial screen to terminal"""
-    print_header("Running Shoe Advisor V1")
+def print_welcome_screen(welcome_message = "Running Shoe Advisor", height=12, length=85):
+    """prints the initial screen to terminal
+    param:
+    height: number of the characters in vertical axis
+    length: number of characters in horizontal axis
+    """
+    outer_boundary = ""
+    welcome_message = " " + welcome_message + " "
+    outer_frame_char = "X"
+    inner_frame_char = "O"
+    inner_frame_upper_boundry_index = int((height - 5)/2)+1
+    inner_frame_text_index = inner_frame_upper_boundry_index + 1
+    inner_frame_lower_boundry_index = inner_frame_upper_boundry_index + 2
+    
+    inner_frame_left_boundry_index = 2 + int((length - len(welcome_message) - 4)/2)
+    inner_frame_right_boundry_index = inner_frame_left_boundry_index + len(welcome_message)
+    
+    welcome_screen_chars_array = [[" "] * length for i in range(height)] 
+    for horizontal_index in range(length):
+        welcome_screen_chars_array[0][horizontal_index] = outer_frame_char
+        welcome_screen_chars_array[-1][horizontal_index] = outer_frame_char
+    
+    for row_index in range(height):
+        current_line = ""
+        for column_index in range(length):
+            current_line += welcome_screen_chars_array[row_index][column_index]
+        print(current_line)
+    
+            
+
+     
+    
+    #print_header("Running Shoe Advisor V1")
     
     
     
