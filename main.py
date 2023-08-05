@@ -104,7 +104,7 @@ def print_welcome_screen(welcome_message = "Running Shoe Advisor", height=9, len
         welcome_screen_chars_array[vertical_index][0] = outer_frame_char
         welcome_screen_chars_array[vertical_index][-1] = outer_frame_char
 
-    #creating inner frame
+    #creating inner frames
     for row_index in range(height):
         if  row_index == inner_frame_upper_boundry_index or row_index == inner_frame_lower_boundry_index:
             for column in range(inner_frame_left_boundry_index,inner_frame_right_boundry_index+1):
