@@ -79,7 +79,7 @@ def print_criteria_menu_ingredient_line(criteria):
     
     print("".join(menu_line))
     
-def print_welcome_screen(welcome_message = "Running Shoe Advisor", height=13, length=86):
+def print_welcome_screen(welcome_message = "Running Shoe Advisor", height=9, length=86):
     """prints the initial screen to terminal
     param:
     height: number of the characters in vertical axis
