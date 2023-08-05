@@ -79,11 +79,7 @@ def print_criteria_menu_ingredient_line(criteria):
     
     print("".join(menu_line))
     
-    
-
-    
-    
-def print_welcome_screen(welcome_message = "Running Shoe Advisor", height=12, length=85):
+def print_welcome_screen(welcome_message = "Running Shoe Advisor", height=13, length=86):
     """prints the initial screen to terminal
     param:
     height: number of the characters in vertical axis
@@ -91,20 +87,33 @@ def print_welcome_screen(welcome_message = "Running Shoe Advisor", height=12, le
     """
     outer_boundary = ""
     welcome_message = " " + welcome_message + " "
-    outer_frame_char = "X"
+    outer_frame_char = "|"
     inner_frame_char = "O"
-    inner_frame_upper_boundry_index = int((height - 5)/2)+1
+    inner_frame_upper_boundry_index = int((height-3)/2)
     inner_frame_text_index = inner_frame_upper_boundry_index + 1
     inner_frame_lower_boundry_index = inner_frame_upper_boundry_index + 2
     
-    inner_frame_left_boundry_index = 2 + int((length - len(welcome_message) - 4)/2)
+    inner_frame_left_boundry_index = int((length - (len(welcome_message)))/2)
     inner_frame_right_boundry_index = inner_frame_left_boundry_index + len(welcome_message)
     
     welcome_screen_chars_array = [[" "] * length for i in range(height)] 
     for horizontal_index in range(length):
         welcome_screen_chars_array[0][horizontal_index] = outer_frame_char
         welcome_screen_chars_array[-1][horizontal_index] = outer_frame_char
-    
+    for vertical_index in range(height):
+        welcome_screen_chars_array[vertical_index][0] = outer_frame_char
+        welcome_screen_chars_array[vertical_index][-1] = outer_frame_char
+
+    #creating inner frame
+    for row_index in range(height):
+        if  row_index == inner_frame_upper_boundry_index or row_index == inner_frame_lower_boundry_index:
+            for column in range(inner_frame_left_boundry_index,inner_frame_right_boundry_index+1):
+                welcome_screen_chars_array [row_index][column] = inner_frame_char
+        if row_index == inner_frame_text_index:
+            column = inner_frame_left_boundry_index + 1
+            for letters in welcome_message:
+                welcome_screen_chars_array [row_index][column] = letters
+                column += 1
     for row_index in range(height):
         current_line = ""
         for column_index in range(length):
